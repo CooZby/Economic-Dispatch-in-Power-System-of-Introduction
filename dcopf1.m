@@ -17,13 +17,11 @@ H = makePTDF(mpc,1);
 Pg=sdpvar(Ng,1);
 
 
-% obj=a'*Pg+ones(Ng,1)'*b;
-% obj=0;
-% for i=1:Ng
-%     obj=obj+a(i)*Pg(i)^2+b(i)*Pg(i)+c(i);
-% end
-A=sparse(1:Ng,1:Ng,a,Ng,Ng);
-obj=Pg'*A*Pg+b'*Pg+ones(Ng,1)'*c;
+obj=a'*Pg+ones(Ng,1)'*b;
+obj=0;
+for i=1:Ng
+   obj=obj+a(i)*Pg(i)^2+b(i)*Pg(i)+c(i);
+end
 con=[sum(Pg)==sum(Pl)];
 con=con+[Pgmin<=Pg<=Pgmax];
 con=con+[-Fmax<=H(:,mpc.gen(:,1))*Pg-H*Pl<=Fmax];
